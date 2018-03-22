@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { StopTrainingComponent } from './stop-trianing.component';
+
 
 @Component({
   selector: 'app-current-training',
@@ -8,21 +9,32 @@ import { StopTrainingComponent } from './stop-trianing.component';
   styleUrls: ['./current-training.component.css']
 })
 export class CurrentTrainingComponent implements OnInit {
-progress=0;
-timer;
+  @Output() trainingExit = new EventEmitter();
+  progress=0;
+  timer;
   constructor(private dailog:MatDialog) { }
 
   ngOnInit() {
+  this.startOrResumeTimer();
+ }
+
+  startOrResumeTimer(){
     this.timer= setInterval(()=>{this.progress+=5
-    if(this.progress>=100){
-    clearInterval(this.timer);
-    } }, 1000);
-     
+      if(this.progress>=100){
+      clearInterval(this.timer);
+      } }, 1000);
   }
+
   onStop(){
     clearInterval(this.timer);
    const dailogRef = this.dailog.open(StopTrainingComponent, {data:{progress:this.progress}});
-   dailogRef.afterClosed().subscribe(result => {console.log(result)})
+   dailogRef.afterClosed().subscribe(result =>
+     {if(result){
+       this.trainingExit.emit();
+     }else{
+      this.startOrResumeTimer();
+     }
+    })
   }
- 
+  
 }
