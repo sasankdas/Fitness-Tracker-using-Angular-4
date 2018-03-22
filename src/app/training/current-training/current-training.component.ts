@@ -21,7 +21,8 @@ timer;
   }
   onStop(){
     clearInterval(this.timer);
-    this.dailog.open(StopTrainingComponent);
+   const dailogRef = this.dailog.open(StopTrainingComponent, {data:{progress:this.progress}});
+   dailogRef.afterClosed().subscribe(result => {console.log(result)})
   }
-
+ 
 }
