@@ -24,6 +24,9 @@ this.authService.authChange.subscribe(result=> {
 onToggleSidenav(){
 this.sidenavToggle.emit();
 }
+onlogout(){
+  this.authService.logout();
+}
 
 ngOnDestroy(){
 this.authSubscription.unsubscribe();

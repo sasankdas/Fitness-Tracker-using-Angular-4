@@ -20,8 +20,14 @@ authSubscription : Subscription
    })
   }
   onClose(){
-this.closeSidenav.emit();
+    this.closeSidenav.emit();
   }
+
+ onlogout(){
+    this.onClose();
+    this.authService.logout();
+  }
+
   ngOnDestroy(){
 this.authSubscription.unsubscribe();
   }
