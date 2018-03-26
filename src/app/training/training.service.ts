@@ -15,6 +15,7 @@ exerciseChanged = new Subject<Exercise>();
     }
 
 private runningExercise: Exercise;
+private exercises: Exercise[]= [];
 
 startExercise(selectedId: string){
     this.runningExercise= this.availableExercises.find(ex => ex.id ===selectedId);
@@ -23,6 +24,21 @@ startExercise(selectedId: string){
 
 getRunningExercise(){
     return {...this.runningExercise};
+}
+completeExercise(){
+    this.exercises.push({...this.runningExercise,date: new Date(), state: 'completed'});
+    this.runningExercise= null;
+    this.exerciseChanged.next(null);
+}
+cancelExercise(progress: number){
+    this.exercises.push(
+        {...this.runningExercise,
+        date: new Date(),
+        duration:this.runningExercise.duration*(progress/100) ,
+        calories:this.runningExercise.duration*(progress/100),
+        state: 'cancelled'});
+    this.runningExercise= null;
+    this.exerciseChanged.next(null);
 }
 
 
