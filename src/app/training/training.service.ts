@@ -21,5 +21,9 @@ startExercise(selectedId: string){
     this.exerciseChanged.next({...this.runningExercise})
 }
 
+getRunningExercise(){
+    return {...this.runningExercise};
+}
+
 
 }
