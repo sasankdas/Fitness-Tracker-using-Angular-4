@@ -10,4 +10,12 @@ export class TrainingService{
     getAvailableExercises(){
         return this.availableExercises.slice();
     }
+
+private runningExercise: Exercise;
+
+startExercise(selectedId: string){
+    this.runningExercise= this.availableExercises.find(ex => ex.id ===selectedId);
+}
+
+
 }
